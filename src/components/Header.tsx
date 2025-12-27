@@ -30,7 +30,9 @@ export function Header() {
                 className="text-xs font-mono uppercase tracking-widest text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-neon-blue transition-colors border-b border-transparent hover:border-black dark:hover:border-neon-blue"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector(item.href)?.scrollIntoView({
+                  const id = item.href.split('#')[1];
+                  const element = document.getElementById(id);
+                  element?.scrollIntoView({
                     behavior: 'smooth'
                   });
                 }}
