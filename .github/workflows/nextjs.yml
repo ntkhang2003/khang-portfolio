@@ -33,18 +33,22 @@ jobs:
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "install-command=install" >> $GITHUB_OUTPUT
             echo "run-command=yarn" >> $GITHUB_OUTPUT
+            echo "runner=yarn" >> $GITHUB_OUTPUT
           elif [ -f "package-lock.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "install-command=install --force --legacy-peer-deps" >> $GITHUB_OUTPUT
             echo "run-command=npm" >> $GITHUB_OUTPUT
+            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           elif [ -f "bun.lockb" ]; then
             echo "manager=bun" >> $GITHUB_OUTPUT
             echo "install-command=install" >> $GITHUB_OUTPUT
             echo "run-command=bun" >> $GITHUB_OUTPUT
+            echo "runner=bun" >> $GITHUB_OUTPUT
           elif [ -f "pnpm-lock.yaml" ]; then
             echo "manager=pnpm" >> $GITHUB_OUTPUT
             echo "install-command=install" >> $GITHUB_OUTPUT
             echo "run-command=pnpm" >> $GITHUB_OUTPUT
+            echo "runner=pnpm" >> $GITHUB_OUTPUT
           else
             echo "Unable to determine package manager"
             exit 1
@@ -75,7 +79,7 @@ jobs:
         working-directory: ${{ env.PROJECT_DIR }}
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.run-command }} next build
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
         working-directory: ${{ env.PROJECT_DIR }}
 
       - name: Upload artifact
